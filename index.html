@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>מחלק קבוצות - איזון מקסימלי</title>
+  <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;600;700;900&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #0a0c10;
+      --surface: #111318;
+      --surface2: #181b22;
+      --border: #22262f;
+      --accent: #f5a623;
+      --text: #e8eaf0;
+      --text2: #8b90a0;
+      --radius: 12px;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Heebo', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      padding: 15px;
+      line-height: 1.4;
+    }
+
+    .container { max-width: 800px; margin: 0 auto; }
+    header { text-align: center; margin-bottom: 25px; }
+    h1 { font-weight: 900; color: var(--accent); font-size: 2rem; }
+
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 18px;
+      margin-bottom: 20px;
+    }
+
+    .row { display: flex; gap: 12px; margin-bottom: 12px; flex-wrap: wrap; }
+    .input-group { flex: 1; min-width: 140px; }
+    label { display: block; font-size: 13px; color: var(--text2); margin-bottom: 5px; }
+    
+    select, input {
+      width: 100%;
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      color: white;
+      padding: 12px;
+      border-radius: 8px;
+      font-size: 16px;
+      outline: none;
+    }
+
+    .btn {
+      background: var(--accent);
+      color: #000;
+      border: none;
+      padding: 14px;
+      border-radius: 8px;
+      font-weight: 700;
+      cursor: pointer;
+      width: 100%;
+      font-size: 16px;
+      transition: 0.2s;
+    }
+    .btn:hover { opacity: 0.9; transform: translateY(-1px); }
+
+    #players-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+      gap: 10px;
+      margin-top: 15px;
+    }
+
+    .player-card {
+      background: var(--surface2);
+      border: 2px solid var(--border);
+      padding: 15px;
+      border-radius: 10px;
+      cursor: pointer;
+      text-align: center;
+      transition: 0.2s;
+      font-weight: 600;
+    }
+    .player-card.selected { border-color: var(--accent); background: rgba(245,166,35,0.15); color: var(--accent); }
+
+    .teams-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 15px;
+      margin-top: 25px;
+    }
+    .team-box {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 15px;
+      border-top: 4px solid var(--accent);
+    }
+    .team-box h3 { margin-bottom: 12px; color: var(--accent); border-bottom: 1px solid var(--border); padding-bottom: 5px; }
+    .team-box ul { list-style: none; }
+    .team-box li { padding: 10px 0; border-bottom: 1px solid #1e222b; }
+
+    .loading { text-align: center; padding: 30px; color: var(--text2); font-style: italic; }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <header>
+    <h1>חלוקת קבוצות</h1>
+  </header>
+
+  <div class="card">
+    <div class="row">
+      <div class="input-group">
+        <label>מספר קבוצות</label>
+        <select id="num-teams">
+          <option value="2">2</option>
+          <option value="3" selected>3</option>
+          <option value="4">4</option>
+        </select>
+      </div>
+      <div class="input-group">
+        <label>שחקנים לקבוצה</label>
+        <select id="players-per-team">
+          <option value="3">3</option>
+          <option value="4">4</option>
+          <option value="5" selected>5</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="row" style="border-top: 1px solid var(--border); padding-top: 15px; margin-top: 10px;">
+      <div class="input-group" style="flex: 2;">
+        <label>שחקן אנונימי (דירוג 3)</label>
+        <input type="text" id="anon-name" placeholder="הכנס שם...">
+      </div>
+      <div class="input-group" style="align-self: flex-end;">
+        <button class="btn" onclick="addAnonymous()" style="background: var(--surface2); color: white; border: 1px solid var(--border);">הוסף לרשימה</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <label>בחר משתתפים:</label>
+    <div id="loading" class="loading">טוען נתונים...</div>
+    <div id="players-grid"></div>
+  </div>
+
+  <button class="btn" onclick="generateTeams()">בצע הגרלה שוויונית</button>
+
+  <div id="results" class="teams-container"></div>
+</div>
+
+<script>
+const SHEET_ID = '1Sl23s5gKXqPfkV7D7NikETyGw_tfoFuks0sXhGe7gwM';
+
+let allPlayers = [];
+let selectedIds = new Set();
+
+function loadSheet() {
+  const url = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=responseHandler:handleResponse`;
+  const script = document.createElement('script');
+  script.src = url;
+  document.body.appendChild(script);
+}
+
+window.handleResponse = function(response) {
+  try {
+    const rows = response.table.rows;
+    allPlayers = rows.map((row, index) => {
+      const name = row.c[0] ? row.c[0].v : null;
+      const rating = row.c[1] ? parseFloat(row.c[1].v) : 3;
+      const isHigh = row.c[2] ? (row.c[2].v === 'כן') : false;
+      if (!name) return null;
+      return { id: 'p' + index, name, rating, isHigh };
+    }).filter(p => p !== null);
+    renderPlayers();
+  } catch (e) {
+    document.getElementById('loading').innerHTML = "שגיאה בטעינה.";
+  }
+};
+
+function renderPlayers() {
+  const grid = document.getElementById('players-grid');
+  document.getElementById('loading').style.display = 'none';
+  grid.innerHTML = '';
+  allPlayers.forEach(p => {
+    const card = document.createElement('div');
+    card.className = `player-card ${selectedIds.has(p.id) ? 'selected' : ''}`;
+    card.onclick = () => {
+      if (selectedIds.has(p.id)) selectedIds.delete(p.id);
+      else selectedIds.add(p.id);
+      renderPlayers();
+    };
+    card.textContent = p.name;
+    grid.appendChild(card);
+  });
+}
+
+function addAnonymous() {
+  const input = document.getElementById('anon-name');
+  const name = input.value.trim();
+  if (!name) return;
+  const newId = 'anon-' + Date.now();
+  allPlayers.unshift({ id: newId, name, rating: 3, isHigh: false });
+  selectedIds.add(newId);
+  input.value = '';
+  renderPlayers();
+}
+
+function generateTeams() {
+  const teamCount = parseInt(document.getElementById('num-teams').value);
+  const perTeam = parseInt(document.getElementById('players-per-team').value);
+  const totalNeeded = teamCount * perTeam;
+
+  let pool = allPlayers.filter(p => selectedIds.has(p.id));
+
+  if (pool.length < totalNeeded) {
+    alert(`בחרת ${pool.length} שחקנים. צריך ${totalNeeded}.`);
+    return;
+  }
+
+  // ערבוב ראשוני אקראי
+  pool = pool.sort(() => Math.random() - 0.5);
+
+  const teams = Array.from({ length: teamCount }, () => ({
+    players: [],
+    totalRating: 0
+  }));
+
+  const assignedIds = new Set();
+
+  // --- 1. פיצול ה-X החזקים ביותר ---
+  const strongestX = [...pool]
+    .sort((a, b) => b.rating - a.rating)
+    .slice(0, teamCount)
+    .sort(() => Math.random() - 0.5); // ערבוב פנימי כדי שלא תמיד הכי חזק יהיה בקבוצה 1
+
+  strongestX.forEach((p, i) => {
+    teams[i].players.push(p);
+    teams[i].totalRating += p.rating;
+    assignedIds.add(p.id);
+  });
+
+  // --- 2. פיצול ה-X החלשים ביותר ---
+  const weakestX = pool
+    .filter(p => !assignedIds.has(p.id))
+    .sort((a, b) => a.rating - b.rating)
+    .slice(0, teamCount)
+    .sort(() => Math.random() - 0.5);
+
+  weakestX.forEach((p, i) => {
+    // מחלקים לפי סדר הפוך או אקראי כדי לא ליצור "זוגות קבועים" עם החזקים
+    teams[i].players.push(p);
+    teams[i].totalRating += p.rating;
+    assignedIds.add(p.id);
+  });
+
+  // עדכון הפול למה שנשאר
+  let remainingPool = pool.filter(p => !assignedIds.has(p.id));
+
+  // --- 3. חלוקת שחקני C (High Role) מהנותרים ---
+  let highRole = remainingPool.filter(p => p.isHigh).sort(() => Math.random() - 0.5);
+  highRole.forEach((p, i) => {
+    const availableTeams = teams.filter(t => t.players.length < perTeam);
+    if (availableTeams.length > 0) {
+      const targetTeam = availableTeams[i % availableTeams.length];
+      targetTeam.players.push(p);
+      targetTeam.totalRating += p.rating;
+      assignedIds.add(p.id);
+    }
+  });
+
+  // --- 4. חלוקת כל השאר לאיזון Rating סופי ---
+  let rest = remainingPool.filter(p => !assignedIds.has(p.id)).sort((a, b) => {
+    if (b.rating !== a.rating) return b.rating - a.rating;
+    return Math.random() - 0.5;
+  });
+
+  rest.forEach(p => {
+    const availableTeams = teams.filter(t => t.players.length < perTeam);
+    if (availableTeams.length > 0) {
+      // בחירת הקבוצה עם הדירוג המצטבר הנמוך ביותר כרגע
+      const bestTeam = availableTeams.reduce((min, t) => t.totalRating < min.totalRating ? t : min, availableTeams[0]);
+      bestTeam.players.push(p);
+      bestTeam.totalRating += p.rating;
+    }
+  });
+
+  renderResults(teams);
+}
+
+function renderResults(teams) {
+  const container = document.getElementById('results');
+  container.innerHTML = '';
+  teams.forEach((team, i) => {
+    const box = document.createElement('div');
+    box.className = 'team-box';
+    const listItems = team.players.map(p => `<li>${p.name}</li>`).join('');
+    box.innerHTML = `<h3>קבוצה ${i + 1}</h3><ul>${listItems}</ul>`;
+    container.appendChild(box);
+  });
+  container.scrollIntoView({ behavior: 'smooth' });
+}
+
+loadSheet();
+</script>
+</body>
+</html>

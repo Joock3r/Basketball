@@ -896,17 +896,17 @@ document.getElementById('saveRatings').addEventListener('click', () => {
 function renderLeaderboard() {
   const c = document.getElementById('leaderboard');
   c.innerHTML = '';
-  const sorted = getSorted();
-  sorted.forEach((p, i) => {
+  const sorted = [...players].sort((a,b) => a.name.localeCompare(b.name, 'he'));
+  sorted.forEach(p => {
     const row = document.createElement('div');
     row.className = 'lb-row';
-    const eff = getEffectiveRank(p);
-    const promoted = eff < p.rank ? `▲${p.rank - eff}` : '';
+    const ptsColor = p.pts > 0 ? 'var(--accent3)' : p.pts < 0 ? 'var(--accent)' : 'var(--text3)';
+															  
     row.innerHTML = `
-      <span class="lb-pos">#${i + 1}</span>
-      <span class="lb-name">${p.name}${promoted ? ` <span style="color:var(--accent3);font-size:11px;">${promoted}</span>` : ''}</span>
-      <span class="lb-base" title="בסיס">${p.rank}</span>
-      <span class="lb-pts">${p.pts > 0 ? '+' : ''}${p.pts} נק'</span>
+										   
+      <span class="lb-name">${p.name}</span>
+															 
+      <span class="lb-pts" style="color:${ptsColor}">${p.pts > 0 ? '+' : ''}${p.pts} נק'</span>
     `;
     c.appendChild(row);
   });

@@ -160,18 +160,17 @@
   }
   .ctrl-group { display: flex; flex-direction: column; gap: 6px; }
   .ctrl-label { font-size: 12px; font-weight: 700; color: var(--text3); text-transform: uppercase; letter-spacing: 0.8px; }
-  .seg-btns { display: flex; gap: 0; }
+  .seg-btns { display: flex; gap: 8px; }
   .seg-btn {
-    padding: 8px 18px; border: 1.5px solid var(--border); cursor: pointer;
-    font-family: 'Heebo', sans-serif; font-size: 14px; font-weight: 600;
+    width: 44px; height: 44px; border-radius: 50%;
+    border: 2px solid var(--border); cursor: pointer;
+    font-family: 'Heebo', sans-serif; font-size: 15px; font-weight: 700;
     background: var(--card2); color: var(--text2);
+    display: flex; align-items: center; justify-content: center;
     transition: all var(--transition);
   }
-  .seg-btn:first-child { border-radius: var(--radius-sm) 0 0 var(--radius-sm); }
-  .seg-btn:last-child { border-radius: 0 var(--radius-sm) var(--radius-sm) 0; }
-  .seg-btn:not(:first-child) { border-right-width: 0; border-left: none; }
-  .seg-btn + .seg-btn { border-right: 1.5px solid var(--border); }
-  .seg-btn.active { background: var(--accent); color: #fff; border-color: var(--accent); }
+  .seg-btn:hover:not(.active) { border-color: var(--accent); color: var(--accent); transform: scale(1.08); }
+  .seg-btn.active { background: var(--accent); color: #fff; border-color: var(--accent); box-shadow: 0 3px 10px rgba(232,75,47,0.35); transform: scale(1.08); }
 
   /* ── GUEST INPUT ── */
   .guest-row {
@@ -338,24 +337,15 @@
 </header>
 
 <div class="tabs">
-  <button class="tab-btn active" data-tab="home">🏠 שחקנים</button>
-  <button class="tab-btn" data-tab="split">⚡ חלוקה</button>
+  <button class="tab-btn active" data-tab="split">⚡ חלוקה</button>
   <button class="tab-btn" data-tab="rate">🏅 דירוג</button>
   <button class="tab-btn" data-tab="lb">📊 טבלה</button>
 </div>
 
 <div class="container">
 
-  <!-- ═══ HOME PANEL ═══ -->
-  <div class="panel active" id="panel-home">
-    <div class="card">
-      <div class="card-title">כל השחקנים לפי א-ב</div>
-      <div class="player-grid" id="playerList"></div>
-    </div>
-  </div>
-
   <!-- ═══ SPLIT PANEL ═══ -->
-  <div class="panel" id="panel-split">
+  <div class="panel active" id="panel-split">
 
     <!-- Selection -->
     <div class="card">
@@ -444,7 +434,7 @@
 // rank: lower = stronger (1 is best), tall: true/false
 // ════════════════════════════════════════════════════════
 const BASE_PLAYERS = [
-  { name: "עידו",            rank: 1,  tall: false },
+  { name: "עידו סידור",            rank: 1,  tall: false },
   { name: "מאור",            rank: 1,  tall: false },
   { name: "אלירן",           rank: 1,  tall: true  },
   { name: "שמואל",           rank: 1,  tall: true  },
@@ -455,15 +445,18 @@ const BASE_PLAYERS = [
   { name: "גולן",            rank: 2,  tall: false },
   { name: "רז",              rank: 3,  tall: false },
   { name: "דניאל",           rank: 3,  tall: false },
-  { name: "אסף א",           rank: 3,  tall: false },
+  { name: "אבי",              rank: 3,  tall: false },
+  { name: "אסף אברמזון",           rank: 3,  tall: false },
   { name: "חן",              rank: 3,  tall: false },
+  { name: "לוטם",              rank: 3,  tall: false },
+  { name: "אלעד",              rank: 3,  tall: false },
   { name: "עומר",            rank: 3,  tall: false },
-  { name: "אסף מ",           rank: 3,  tall: false },
-  { name: "אלדד פ",          rank: 3,  tall: false },
-  { name: "יוני",            rank: 3,  tall: false },
+  { name: "אסף מגריסו",           rank: 3,  tall: false },
+  { name: "אלדד פישר",          rank: 3,  tall: false },
+  { name: "יוני פרהדיאן",            rank: 3,  tall: false },
   { name: "עידו תורג'מן",    rank: 3,  tall: false },
-  { name: "יוני (2)",        rank: 3,  tall: true  },
-  { name: "אלדד",            rank: 4,  tall: false },
+  { name: "יוני לונדר",        rank: 3,  tall: true  },
+  { name: "אלדד יוספוב",            rank: 4,  tall: false },
   { name: "מיכאל",           rank: 4,  tall: true  },
   { name: "אור",             rank: 4,  tall: false },
   { name: "עומרי",           rank: 4,  tall: false },
@@ -472,6 +465,7 @@ const BASE_PLAYERS = [
   { name: "נתי",             rank: 4,  tall: false },
   { name: "שחר",             rank: 4,  tall: false },
   { name: "גיל",             rank: 4,  tall: true  },
+  { name: "רן קליר",             rank: 4,  tall: true  },
   { name: "אחימאיר",         rank: 4,  tall: true  },
   { name: "טל",              rank: 4,  tall: false },
 ];
@@ -528,28 +522,9 @@ document.querySelectorAll('.tab-btn').forEach(btn => {
     document.getElementById('panel-' + btn.dataset.tab).classList.add('active');
     if (btn.dataset.tab === 'rate') renderRatePanel();
     if (btn.dataset.tab === 'lb') renderLeaderboard();
-    if (btn.dataset.tab === 'home') renderHome();
     if (btn.dataset.tab === 'split') renderSplitList();
   });
 });
-
-// ════════════════════════════════════════════════════════
-// HOME PANEL — alphabetical
-// ════════════════════════════════════════════════════════
-function renderHome() {
-  const sorted = [...players].sort((a,b) => a.name.localeCompare(b.name, 'he'));
-  const container = document.getElementById('playerList');
-  container.innerHTML = '';
-  sorted.forEach(p => {
-    const el = document.createElement('div');
-    el.className = 'player-item';
-    el.style.cursor = 'default';
-    el.innerHTML = `<span class="player-name">${p.name}</span>
-      <span class="player-rank-badge">#${p.rank}</span>`;
-    container.appendChild(el);
-  });
-}
-renderHome();
 
 // ════════════════════════════════════════════════════════
 // SPLIT PANEL — player selection
@@ -646,30 +621,68 @@ function doSplit() {
   }
   warning.innerHTML = '';
 
-  // If too few players: split anyway, teams will add players from loser
-  let extraMsg = '';
-  if (pool.length < needed) {
-    extraMsg = `⚠️ נבחרו ${pool.length} שחקנים במקום ${needed}. כל קבוצה תגייס שחקנים נוספים לפי הצורך.`;
+  // ── Determine actual slots: each team gets exactly perTeam players (hard cap) ──
+  // If pool > needed: bench the weakest players
+  // If pool < needed: teams may be smaller (distribute as evenly as possible, max perTeam)
+  let bench = [];
+  if (pool.length > needed) {
+    const byRank = [...pool].sort((a,b) => getEffectiveRank(a) - getEffectiveRank(b));
+    pool  = byRank.slice(0, needed);
+    bench = byRank.slice(needed);
   }
 
-  // ── Step 1: assign tier (1-4) from effective rank distribution ──
-  // Distribute pool into 4 tiers as evenly as possible, lowest tiers get more
+  // Actual team sizes: each team gets at most perTeam players
+  // Distribute pool.length among numTeams, max perTeam each, fill from top
+  const actualSizes = Array(numTeams).fill(0);
+  let remaining = pool.length;
+  for (let i = 0; i < numTeams && remaining > 0; i++) {
+    const give = Math.min(perTeam, Math.ceil(remaining / (numTeams - i)));
+    actualSizes[i] = give;
+    remaining -= give;
+  }
+
+  let extraMsg = '';
+  if (bench.length > 0) {
+    extraMsg = `ℹ️ ${bench.length} שחקן/ים ימתינו מחוץ לשטח: ${bench.map(p=>p.name).join(', ')}`;
+  } else if (pool.length < needed) {
+    extraMsg = `⚠️ נבחרו ${pool.length} שחקנים במקום ${needed}. חלק מהקבוצות יהיו קטנות יותר.`;
+  }
+
+  // ── Step 1: assign tier (1-4) dynamically from the selected pool only ──
+  // Pool is sorted best→worst by effective rank; split into 4 equal groups.
+  // Tier 1 = top quarter, Tier 4 = bottom quarter.
+  // If not divisible by 4, earlier tiers (1,2,3) get one fewer — tier 4 gets the extras.
   const poolSorted = [...pool].sort((a,b) => getEffectiveRank(a) - getEffectiveRank(b));
-  const tierSizes = distribute4(poolSorted.length);
+  const n = poolSorted.length;
+  const base4 = Math.floor(n / 4);
+  const rem4  = n % 4;
+  // sizes for tiers 1-4: tiers 4,3,2,1 get the remainder (bottom tiers get more)
+  const tierSizes4 = [base4, base4, base4, base4];
+  for (let i = 0; i < rem4; i++) tierSizes4[3 - i]++;
   let tiered = [];
   let idx = 0;
   for (let t = 1; t <= 4; t++) {
-    for (let j = 0; j < tierSizes[t-1]; j++) {
+    for (let j = 0; j < tierSizes4[t-1]; j++) {
       tiered.push({...poolSorted[idx], tier: t});
       idx++;
     }
   }
 
-  // ── Step 2: distribute each tier across teams via random shuffle + round-robin ──
+  // ── Step 2: distribute each tier across teams via random shuffle + round-robin,
+  //            but hard-cap each team at its actualSize ──
   const teamArrays = Array.from({length: numTeams}, () => []);
   for (let t = 1; t <= 4; t++) {
     const tierPlayers = shuffle(tiered.filter(p => p.tier === t));
-    tierPlayers.forEach((p, i) => teamArrays[i % numTeams].push(p));
+    for (const p of tierPlayers) {
+      // find the team with fewest players that still has room
+      let target = -1, minLen = Infinity;
+      for (let i = 0; i < numTeams; i++) {
+        if (teamArrays[i].length < actualSizes[i] && teamArrays[i].length < minLen) {
+          minLen = teamArrays[i].length; target = i;
+        }
+      }
+      if (target !== -1) teamArrays[target].push(p);
+    }
   }
 
   // ── Step 3: balance by total score ──
@@ -785,7 +798,7 @@ function renderTeams(extraMsg) {
     card.innerHTML = `
       <div class="team-header">
         <span class="team-name">${TEAM_NAMES[ti]}</span>
-        <span class="team-score-badge">${score} נק'</span>
+
       </div>
       <div class="team-players">
         ${team.map((p, i) => `
@@ -835,6 +848,7 @@ function renderRatePanel() {
     { key: 'vweak', label: 'חלש מאוד −2', pts: -2 },
   ];
 
+  nonGuests.sort((a,b) => a.name.localeCompare(b.name, 'he'));
   nonGuests.forEach(p => {
     const row = document.createElement('div');
     row.className = 'rating-player-row';

@@ -8,457 +8,266 @@
 <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;700;900&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
 <style>
   :root {
-    --bg: #f0ede8;
-    --bg2: #e4e0d9;
-    --card: #ffffff;
-    --card2: #f7f5f2;
-    --border: #d4cfc8;
-    --text: #1a1714;
-    --text2: #5a534e;
-    --text3: #8a837e;
-    --accent: #e84b2f;
-    --accent2: #2f7de8;
-    --accent3: #2db87a;
-    --tag-bg: #ffe8e4;
-    --tag-text: #c43020;
+    --bg: #f0ede8; --bg2: #e4e0d9; --card: #ffffff; --card2: #f7f5f2;
+    --border: #d4cfc8; --text: #1a1714; --text2: #5a534e; --text3: #8a837e;
+    --accent: #e84b2f; --accent2: #2f7de8; --accent3: #2db87a;
+    --tag-bg: #ffe8e4; --tag-text: #c43020;
     --shadow: 0 2px 12px rgba(0,0,0,0.08);
-    --shadow-lg: 0 8px 32px rgba(0,0,0,0.12);
-    --radius: 14px;
-    --radius-sm: 8px;
+    --radius: 14px; --radius-sm: 8px;
     --transition: 0.22s cubic-bezier(0.4,0,0.2,1);
   }
   [data-theme="dark"] {
-    --bg: #131110;
-    --bg2: #1d1b18;
-    --card: #222019;
-    --card2: #2a2823;
-    --border: #38352f;
-    --text: #f0ece6;
-    --text2: #b0a99e;
-    --text3: #6a635c;
-    --accent: #ff6347;
-    --accent2: #5b9df5;
-    --accent3: #3dd68c;
-    --tag-bg: #3d1a12;
-    --tag-text: #ff8066;
+    --bg: #131110; --bg2: #1d1b18; --card: #222019; --card2: #2a2823;
+    --border: #38352f; --text: #f0ece6; --text2: #b0a99e; --text3: #6a635c;
+    --accent: #ff6347; --accent2: #5b9df5; --accent3: #3dd68c;
+    --tag-bg: #3d1a12; --tag-text: #ff8066;
     --shadow: 0 2px 12px rgba(0,0,0,0.4);
-    --shadow-lg: 0 8px 32px rgba(0,0,0,0.5);
   }
   * { box-sizing: border-box; margin: 0; padding: 0; }
-  body {
-    font-family: 'Heebo', sans-serif;
-    background: var(--bg);
-    color: var(--text);
-    min-height: 100vh;
-    transition: background var(--transition), color var(--transition);
-  }
-  /* ── HEADER ── */
+  body { font-family: 'Heebo', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; transition: background var(--transition), color var(--transition); }
+
+  /* HEADER */
   header {
-    background: var(--card);
-    border-bottom: 2px solid var(--border);
-    padding: 16px 24px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    position: sticky; top: 0; z-index: 100;
-    box-shadow: var(--shadow);
+    background: var(--card); border-bottom: 2px solid var(--border);
+    padding: 14px 24px; display: flex; align-items: center; justify-content: space-between;
+    position: sticky; top: 0; z-index: 100; box-shadow: var(--shadow);
   }
-  header h1 {
-    font-size: 22px; font-weight: 900; letter-spacing: -0.5px;
-    display: flex; align-items: center; gap: 10px;
-  }
+  header h1 { font-size: 21px; font-weight: 900; letter-spacing: -0.5px; display: flex; align-items: center; gap: 8px; }
   header h1 span { color: var(--accent); }
-  .header-actions { display: flex; gap: 10px; align-items: center; }
   .btn-icon {
-    background: var(--card2); border: 1.5px solid var(--border);
-    color: var(--text); border-radius: 50%; width: 40px; height: 40px;
-    display: flex; align-items: center; justify-content: center;
-    cursor: pointer; font-size: 18px; transition: all var(--transition);
+    background: var(--card2); border: 1.5px solid var(--border); color: var(--text);
+    border-radius: 50%; width: 38px; height: 38px; display: flex; align-items: center;
+    justify-content: center; cursor: pointer; font-size: 17px; transition: all var(--transition);
   }
   .btn-icon:hover { background: var(--border); transform: scale(1.08); }
 
-  /* ── NAV TABS ── */
-  .tabs {
-    display: flex; gap: 4px; padding: 12px 24px 0;
-    border-bottom: 2px solid var(--border);
-    background: var(--card);
-  }
-  .tab-btn {
-    padding: 10px 20px; border-radius: var(--radius-sm) var(--radius-sm) 0 0;
-    border: none; cursor: pointer; font-family: 'Heebo', sans-serif;
-    font-size: 14px; font-weight: 600;
-    background: var(--bg2); color: var(--text2);
-    transition: all var(--transition); border: 1.5px solid var(--border); border-bottom: none;
-  }
-  .tab-btn.active {
-    background: var(--card); color: var(--accent); border-color: var(--border);
-    position: relative;
-  }
-  .tab-btn.active::after {
-    content: ''; position: absolute; bottom: -2px; left: 0; right: 0;
-    height: 2px; background: var(--card);
-  }
+  /* CONTAINER */
+  .container { max-width: 860px; margin: 0 auto; padding: 20px 20px 40px; }
 
-  /* ── MAIN CONTAINER ── */
-  .container { max-width: 900px; margin: 0 auto; padding: 24px; }
-
-  /* ── PANELS ── */
-  .panel { display: none; }
-  .panel.active { display: block; }
-
-  /* ── CARDS ── */
+  /* CARD */
   .card {
-    background: var(--card); border-radius: var(--radius);
-    border: 1.5px solid var(--border); padding: 20px;
-    box-shadow: var(--shadow); margin-bottom: 16px;
+    background: var(--card); border-radius: var(--radius); border: 1.5px solid var(--border);
+    padding: 18px 20px; box-shadow: var(--shadow); margin-bottom: 14px;
   }
-  .card-title {
-    font-size: 13px; font-weight: 700; text-transform: uppercase;
-    letter-spacing: 1px; color: var(--text3); margin-bottom: 14px;
-  }
+  .card-title { font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: var(--text3); margin-bottom: 14px; }
 
-  /* ── PLAYER LIST ── */
-  .player-grid {
-    display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-    gap: 8px;
-  }
-  .player-item {
-    display: flex; align-items: center; justify-content: space-between;
-    padding: 10px 14px; border-radius: var(--radius-sm);
-    border: 1.5px solid var(--border); background: var(--card2);
-    cursor: pointer; transition: all var(--transition); user-select: none;
-    gap: 8px;
-  }
-  .player-item:hover { border-color: var(--accent); transform: translateY(-1px); }
-  .player-item.selected {
-    background: var(--tag-bg); border-color: var(--accent); color: var(--accent);
-  }
-  .player-item.selected .player-check { opacity: 1; }
-  .player-name { font-weight: 600; font-size: 14px; flex: 1; }
-  .player-rank-badge {
-    font-family: 'Space Mono', monospace; font-size: 10px;
-    background: var(--bg2); color: var(--text3);
-    padding: 2px 6px; border-radius: 4px; border: 1px solid var(--border);
-  }
-  .player-check { opacity: 0; color: var(--accent); font-size: 16px; transition: opacity var(--transition); }
-
-  /* ── SELECTION SUMMARY ── */
-  .sel-summary {
-    display: flex; align-items: center; gap: 12px; flex-wrap: wrap;
-    padding: 12px 16px; background: var(--card2); border-radius: var(--radius-sm);
-    border: 1.5px solid var(--border); margin-bottom: 16px;
-  }
-  .sel-count {
-    font-family: 'Space Mono', monospace; font-size: 22px; font-weight: 700;
-    color: var(--accent); line-height: 1;
-  }
-  .sel-label { font-size: 13px; color: var(--text2); }
-
-  /* ── CONTROLS ── */
-  .controls-row {
-    display: flex; gap: 12px; flex-wrap: wrap; align-items: flex-end; margin-bottom: 16px;
-  }
-  .ctrl-group { display: flex; flex-direction: column; gap: 6px; }
+  /* SETTINGS ROW */
+  .settings-row { display: flex; gap: 24px; flex-wrap: wrap; align-items: flex-start; }
+  .ctrl-group { display: flex; flex-direction: column; gap: 8px; }
   .ctrl-label { font-size: 12px; font-weight: 700; color: var(--text3); text-transform: uppercase; letter-spacing: 0.8px; }
   .seg-btns { display: flex; gap: 8px; }
   .seg-btn {
-    width: 44px; height: 44px; border-radius: 50%;
-    border: 2px solid var(--border); cursor: pointer;
-    font-family: 'Heebo', sans-serif; font-size: 15px; font-weight: 700;
+    width: 44px; height: 44px; border-radius: 50%; border: 2px solid var(--border);
+    cursor: pointer; font-family: 'Heebo', sans-serif; font-size: 15px; font-weight: 700;
     background: var(--card2); color: var(--text2);
-    display: flex; align-items: center; justify-content: center;
-    transition: all var(--transition);
+    display: flex; align-items: center; justify-content: center; transition: all var(--transition);
   }
   .seg-btn:hover:not(.active) { border-color: var(--accent); color: var(--accent); transform: scale(1.08); }
   .seg-btn.active { background: var(--accent); color: #fff; border-color: var(--accent); box-shadow: 0 3px 10px rgba(232,75,47,0.35); transform: scale(1.08); }
 
-  /* ── GUEST INPUT ── */
-  .guest-row {
-    display: flex; gap: 10px; align-items: center; flex-wrap: wrap; margin-bottom: 12px;
-  }
+  /* GUEST */
+  .guest-row { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
   .guest-input {
-    flex: 1; min-width: 160px; padding: 9px 14px;
-    border: 1.5px solid var(--border); border-radius: var(--radius-sm);
-    background: var(--card2); color: var(--text); font-family: 'Heebo', sans-serif;
-    font-size: 14px; transition: border-color var(--transition); outline: none;
+    flex: 1; min-width: 150px; padding: 9px 14px; border: 1.5px solid var(--border);
+    border-radius: var(--radius-sm); background: var(--card2); color: var(--text);
+    font-family: 'Heebo', sans-serif; font-size: 14px; transition: border-color var(--transition); outline: none;
   }
   .guest-input:focus { border-color: var(--accent2); }
-  .checkbox-label {
-    display: flex; align-items: center; gap: 6px; cursor: pointer;
-    font-size: 13px; font-weight: 600; color: var(--text2);
-  }
+  .checkbox-label { display: flex; align-items: center; gap: 6px; cursor: pointer; font-size: 13px; font-weight: 600; color: var(--text2); white-space: nowrap; }
   .checkbox-label input { accent-color: var(--accent); width: 16px; height: 16px; cursor: pointer; }
-
-  /* ── PRIMARY BUTTON ── */
-  .btn-primary {
-    padding: 11px 28px; background: var(--accent); color: #fff;
-    border: none; border-radius: var(--radius-sm); cursor: pointer;
-    font-family: 'Heebo', sans-serif; font-size: 15px; font-weight: 700;
-    transition: all var(--transition); letter-spacing: 0.3px;
-    display: inline-flex; align-items: center; gap: 8px;
+  .guest-chips { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 10px; }
+  .guest-chip {
+    display: flex; align-items: center; gap: 6px; padding: 5px 12px;
+    background: var(--tag-bg); color: var(--tag-text); border-radius: 20px;
+    font-size: 13px; font-weight: 600;
   }
-  .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 4px 16px rgba(232,75,47,0.3); }
-  .btn-primary:active { transform: translateY(0); }
+  .guest-chip button { background: none; border: none; cursor: pointer; color: var(--tag-text); font-size: 14px; padding: 0; line-height: 1; opacity: 0.6; }
+  .guest-chip button:hover { opacity: 1; }
+
+  /* PLAYER LIST */
+  .sel-bar {
+    display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap;
+    gap: 10px; margin-bottom: 12px;
+  }
+  .sel-count-wrap { display: flex; align-items: baseline; gap: 6px; }
+  .sel-count { font-family: 'Space Mono', monospace; font-size: 24px; font-weight: 700; color: var(--accent); }
+  .sel-label { font-size: 13px; color: var(--text2); }
   .btn-secondary {
-    padding: 10px 22px; background: var(--card2); color: var(--text);
+    padding: 8px 18px; background: var(--card2); color: var(--text);
     border: 1.5px solid var(--border); border-radius: var(--radius-sm); cursor: pointer;
-    font-family: 'Heebo', sans-serif; font-size: 14px; font-weight: 600;
-    transition: all var(--transition);
+    font-family: 'Heebo', sans-serif; font-size: 13px; font-weight: 600; transition: all var(--transition);
   }
   .btn-secondary:hover { border-color: var(--accent2); color: var(--accent2); }
 
-  /* ── TEAMS DISPLAY ── */
-  .teams-grid {
-    display: grid; gap: 16px;
-    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  .player-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(165px, 1fr)); gap: 7px; }
+  .player-item {
+    display: flex; align-items: center; gap: 8px; padding: 9px 13px;
+    border-radius: var(--radius-sm); border: 1.5px solid var(--border);
+    background: var(--card2); cursor: pointer; transition: all var(--transition); user-select: none;
   }
+  .player-item:hover { border-color: var(--accent); transform: translateY(-1px); }
+  .player-item.selected { background: var(--tag-bg); border-color: var(--accent); color: var(--tag-text); }
+  .player-check { font-size: 14px; opacity: 0; transition: opacity var(--transition); flex-shrink: 0; }
+  .player-item.selected .player-check { opacity: 1; }
+  .player-name { font-weight: 600; font-size: 14px; }
+
+  /* SPLIT BUTTON */
+  .split-btn-wrap { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; margin-top: 4px; }
+  .btn-primary {
+    padding: 12px 32px; background: var(--accent); color: #fff; border: none;
+    border-radius: var(--radius-sm); cursor: pointer; font-family: 'Heebo', sans-serif;
+    font-size: 15px; font-weight: 700; transition: all var(--transition); letter-spacing: 0.3px;
+    display: inline-flex; align-items: center; gap: 8px;
+  }
+  .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 4px 16px rgba(232,75,47,0.35); }
+  .btn-primary:active { transform: translateY(0); }
+
+  /* ALERT */
+  .alert { padding: 11px 15px; border-radius: var(--radius-sm); font-size: 13px; font-weight: 500; border: 1.5px solid; margin-bottom: 12px; }
+  .alert-warn { background: #fff8e1; border-color: #f0c040; color: #7a6010; }
+  .alert-info { background: #e8f4ff; border-color: #5b9df5; color: #1a4a90; }
+  [data-theme="dark"] .alert-warn { background: #2a2200; border-color: #7a6010; color: #f0c040; }
+  [data-theme="dark"] .alert-info { background: #0a1a30; border-color: #2f5a9a; color: #5b9df5; }
+
+  /* TEAMS */
+  .teams-grid { display: grid; gap: 14px; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); }
   .team-card {
-    background: var(--card); border-radius: var(--radius);
-    border: 2px solid var(--border); overflow: hidden;
-    box-shadow: var(--shadow); animation: slideUp 0.35s ease both;
-  }
-  @keyframes slideUp {
-    from { opacity: 0; transform: translateY(16px); }
-    to   { opacity: 1; transform: translateY(0); }
+    background: var(--card); border-radius: var(--radius); border: 2px solid var(--border);
+    overflow: hidden; box-shadow: var(--shadow); animation: slideUp 0.32s ease both;
   }
   .team-card:nth-child(2) { animation-delay: 0.07s; }
   .team-card:nth-child(3) { animation-delay: 0.14s; }
-  .team-header {
-    padding: 14px 18px;
-    display: flex; align-items: center; justify-content: space-between;
-  }
-  .team-color-a .team-header { background: linear-gradient(135deg,#e84b2f22,#e84b2f11); border-bottom: 2px solid #e84b2f44; }
-  .team-color-b .team-header { background: linear-gradient(135deg,#2f7de822,#2f7de811); border-bottom: 2px solid #2f7de844; }
-  .team-color-c .team-header { background: linear-gradient(135deg,#2db87a22,#2db87a11); border-bottom: 2px solid #2db87a44; }
+  @keyframes slideUp { from { opacity:0; transform:translateY(14px); } to { opacity:1; transform:translateY(0); } }
+  .team-color-a .team-header { background: linear-gradient(135deg,#e84b2f22,#e84b2f08); border-bottom: 2px solid #e84b2f33; }
+  .team-color-b .team-header { background: linear-gradient(135deg,#2f7de822,#2f7de808); border-bottom: 2px solid #2f7de833; }
+  .team-color-c .team-header { background: linear-gradient(135deg,#2db87a22,#2db87a08); border-bottom: 2px solid #2db87a33; }
+  .team-header { padding: 13px 16px; }
   .team-color-a .team-name { color: var(--accent); }
   .team-color-b .team-name { color: var(--accent2); }
   .team-color-c .team-name { color: var(--accent3); }
   .team-name { font-size: 16px; font-weight: 900; }
-  .team-score-badge {
-    font-family: 'Space Mono', monospace; font-size: 11px;
-    padding: 3px 8px; border-radius: 20px; font-weight: 700;
-  }
-  .team-color-a .team-score-badge { background: #e84b2f22; color: var(--accent); }
-  .team-color-b .team-score-badge { background: #2f7de822; color: var(--accent2); }
-  .team-color-c .team-score-badge { background: #2db87a22; color: var(--accent3); }
-  .team-players { padding: 12px 18px; display: flex; flex-direction: column; gap: 6px; }
+  .team-players { padding: 10px 14px; display: flex; flex-direction: column; gap: 5px; }
   .team-player-row {
-    display: flex; align-items: center; gap: 10px;
-    padding: 8px 12px; border-radius: var(--radius-sm);
-    background: var(--card2); border: 1px solid var(--border);
-    font-size: 14px; font-weight: 600;
-    animation: fadeIn 0.3s ease both;
+    display: flex; align-items: center; gap: 9px; padding: 7px 11px;
+    border-radius: var(--radius-sm); background: var(--card2); border: 1px solid var(--border);
+    font-size: 14px; font-weight: 600; animation: fadeIn 0.25s ease both;
   }
-  @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-  .team-player-row .pnum {
-    font-family: 'Space Mono', monospace; font-size: 11px; color: var(--text3);
-    min-width: 16px;
-  }
-  .extra-tag {
-    font-size: 10px; padding: 2px 7px; border-radius: 10px;
-    background: var(--bg2); color: var(--text3); border: 1px solid var(--border);
-    margin-right: auto;
-  }
+  @keyframes fadeIn { from { opacity:0; } to { opacity:1; } }
+  .team-player-row .pnum { font-family: 'Space Mono', monospace; font-size: 10px; color: var(--text3); min-width: 14px; }
+  .extra-tag { font-size: 10px; padding: 2px 7px; border-radius: 10px; background: var(--tag-bg); color: var(--tag-text); border: 1px solid var(--border); margin-right: auto; }
 
-  /* ── RATINGS PANEL ── */
-  .rating-game-card {
-    background: var(--card); border-radius: var(--radius);
-    border: 1.5px solid var(--border); padding: 20px; margin-bottom: 16px;
-  }
-  .rating-player-row {
-    display: flex; align-items: center; gap: 12px; flex-wrap: wrap;
-    padding: 10px 0; border-bottom: 1px solid var(--border);
-  }
-  .rating-player-row:last-child { border-bottom: none; }
-  .rating-pname { font-weight: 600; font-size: 14px; min-width: 120px; flex: 1; }
-  .rating-btns { display: flex; gap: 4px; }
-  .rate-btn {
-    padding: 5px 10px; border-radius: var(--radius-sm); border: 1.5px solid var(--border);
-    cursor: pointer; font-family: 'Heebo', sans-serif; font-size: 12px; font-weight: 700;
-    background: var(--card2); color: var(--text2); transition: all var(--transition);
-  }
-  .rate-btn.active-great  { background: #2db87a; color: #fff; border-color: #2db87a; }
-  .rate-btn.active-good   { background: #2f7de8; color: #fff; border-color: #2f7de8; }
-  .rate-btn.active-weak   { background: #e8a12f; color: #fff; border-color: #e8a12f; }
-  .rate-btn.active-vweak  { background: #e84b2f; color: #fff; border-color: #e84b2f; }
-  .rate-btn:hover:not([disabled]) { transform: scale(1.05); }
+  /* BENCH */
+  .bench-card { background: var(--card2); border: 1.5px dashed var(--border); border-radius: var(--radius); padding: 14px 18px; }
+  .bench-title { font-size: 12px; font-weight: 700; color: var(--text3); text-transform: uppercase; letter-spacing: 0.8px; margin-bottom: 8px; }
+  .bench-names { display: flex; flex-wrap: wrap; gap: 6px; }
+  .bench-chip { padding: 4px 12px; background: var(--card); border: 1.5px solid var(--border); border-radius: 20px; font-size: 13px; font-weight: 600; color: var(--text2); }
 
-  /* ── LEADERBOARD ── */
-  .lb-row {
-    display: flex; align-items: center; gap: 12px;
-    padding: 10px 16px; border-radius: var(--radius-sm);
-    background: var(--card2); border: 1px solid var(--border); margin-bottom: 6px;
-  }
-  .lb-pos {
-    font-family: 'Space Mono', monospace; font-size: 13px; font-weight: 700;
-    color: var(--text3); min-width: 28px;
-  }
-  .lb-name { font-weight: 600; font-size: 14px; flex: 1; }
-  .lb-pts {
-    font-family: 'Space Mono', monospace; font-size: 13px; font-weight: 700;
-    color: var(--accent);
-  }
-  .lb-base {
-    font-family: 'Space Mono', monospace; font-size: 11px; color: var(--text3);
-  }
-
-  /* ── ALERTS ── */
-  .alert {
-    padding: 12px 16px; border-radius: var(--radius-sm);
-    font-size: 13px; font-weight: 500; margin-bottom: 14px;
-    border: 1.5px solid;
-  }
-  .alert-warn { background: #fff8e1; border-color: #f0c040; color: #7a6010; }
-  [data-theme="dark"] .alert-warn { background: #2a2200; border-color: #7a6010; color: #f0c040; }
-  .alert-info { background: #e8f4ff; border-color: #5b9df5; color: #1a4a90; }
-  [data-theme="dark"] .alert-info { background: #0a1a30; border-color: #2f5a9a; color: #5b9df5; }
-
-  /* ── MISC ── */
-  .divider { border: none; border-top: 1.5px solid var(--border); margin: 16px 0; }
-  .flex-between { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px; }
-  .empty-state { text-align: center; padding: 40px 20px; color: var(--text3); font-size: 14px; }
-  .empty-state .icon { font-size: 40px; margin-bottom: 12px; }
-
-  /* mobile */
   @media (max-width: 560px) {
-    .container { padding: 14px; }
-    .player-grid { grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); }
-    .controls-row { flex-direction: column; }
-    header h1 { font-size: 17px; }
+    .container { padding: 12px 12px 32px; }
+    .player-grid { grid-template-columns: repeat(auto-fill, minmax(135px, 1fr)); }
+    .settings-row { gap: 16px; }
   }
 </style>
 </head>
 <body>
 <header>
   <h1>⚽ חלוקת <span>קבוצות</span></h1>
-  <div class="header-actions">
-    <button class="btn-icon" id="themeToggle" title="החלף ערכת צבעים">🌙</button>
-  </div>
+  <button class="btn-icon" id="themeToggle" title="החלף ערכת צבעים">🌙</button>
 </header>
-
-<div class="tabs">
-  <button class="tab-btn active" data-tab="split">⚡ חלוקה</button>
-  <button class="tab-btn" data-tab="rate">🏅 דירוג</button>
-  <button class="tab-btn" data-tab="lb">📊 טבלה</button>
-</div>
 
 <div class="container">
 
-  <!-- ═══ SPLIT PANEL ═══ -->
-  <div class="panel active" id="panel-split">
-
-    <!-- Selection -->
-    <div class="card">
-      <div class="card-title">בחר שחקנים</div>
-      <div class="sel-summary">
-        <div>
-          <div class="sel-count" id="selCount">0</div>
-          <div class="sel-label">שחקנים נבחרו</div>
-        </div>
-        <div style="flex:1"></div>
-        <button class="btn-secondary" id="clearSel">נקה בחירה</button>
-      </div>
-      <div class="player-grid" id="splitPlayerList"></div>
-    </div>
-
-    <!-- Guest -->
-    <div class="card">
-      <div class="card-title">➕ הוסף שחקן מזדמן</div>
-      <div class="guest-row">
-        <input class="guest-input" id="guestName" placeholder="שם השחקן..." />
-        <label class="checkbox-label">
-          <input type="checkbox" id="guestTall"> גבוה
-        </label>
-        <button class="btn-secondary" id="addGuest">הוסף</button>
-      </div>
-      <div id="guestList" style="display:flex;flex-wrap:wrap;gap:6px;"></div>
-    </div>
-
-    <!-- Controls -->
-    <div class="card">
-      <div class="card-title">הגדרות חלוקה</div>
-      <div class="controls-row">
-        <div class="ctrl-group">
-          <span class="ctrl-label">מספר קבוצות</span>
-          <div class="seg-btns" id="numTeams">
-            <button class="seg-btn active" data-val="2">2</button>
-            <button class="seg-btn" data-val="3">3</button>
-          </div>
-        </div>
-        <div class="ctrl-group">
-          <span class="ctrl-label">שחקנים בקבוצה</span>
-          <div class="seg-btns" id="playersPerTeam">
-            <button class="seg-btn" data-val="3">3</button>
-            <button class="seg-btn active" data-val="4">4</button>
-            <button class="seg-btn" data-val="5">5</button>
-          </div>
+  <!-- SETTINGS -->
+  <div class="card">
+    <div class="card-title">הגדרות חלוקה</div>
+    <div class="settings-row">
+      <div class="ctrl-group">
+        <span class="ctrl-label">מספר קבוצות</span>
+        <div class="seg-btns" id="numTeamsCtrl">
+          <button class="seg-btn active" data-val="2">2</button>
+          <button class="seg-btn" data-val="3">3</button>
         </div>
       </div>
-      <div id="splitWarning"></div>
-      <button class="btn-primary" id="splitBtn">⚡ חלק קבוצות</button>
-    </div>
-
-    <!-- Result -->
-    <div id="teamsResult"></div>
-  </div>
-
-  <!-- ═══ RATE PANEL ═══ -->
-  <div class="panel" id="panel-rate">
-    <div class="card">
-      <div class="flex-between" style="margin-bottom:16px;">
-        <div class="card-title" style="margin-bottom:0">דרג משחק אחרון</div>
-        <div style="color:var(--text3);font-size:12px;">דרג רק שחקנים שהיו מעל/מתחת לממוצע</div>
+      <div class="ctrl-group">
+        <span class="ctrl-label">שחקנים בקבוצה</span>
+        <div class="seg-btns" id="perTeamCtrl">
+          <button class="seg-btn" data-val="3">3</button>
+          <button class="seg-btn active" data-val="4">4</button>
+          <button class="seg-btn" data-val="5">5</button>
+        </div>
       </div>
-      <div id="ratePlayerList"></div>
-      <hr class="divider">
-      <button class="btn-primary" id="saveRatings">💾 שמור דירוג</button>
     </div>
   </div>
 
-  <!-- ═══ LEADERBOARD PANEL ═══ -->
-  <div class="panel" id="panel-lb">
-    <div class="card">
-      <div class="flex-between" style="margin-bottom:16px;">
-        <div class="card-title" style="margin-bottom:0">טבלת שחקנים</div>
-        <div style="font-size:12px;color:var(--text3);">כל 5 נקודות = עלייה במקום</div>
-      </div>
-      <div id="leaderboard"></div>
+  <!-- GUEST -->
+  <div class="card">
+    <div class="card-title">➕ שחקן מזדמן</div>
+    <div class="guest-row">
+      <input class="guest-input" id="guestName" placeholder="שם השחקן..." />
+      <label class="checkbox-label"><input type="checkbox" id="guestTall"> גבוה</label>
+      <button class="btn-secondary" id="addGuestBtn">הוסף</button>
     </div>
+    <div class="guest-chips" id="guestChips"></div>
   </div>
+
+  <!-- PLAYER LIST -->
+  <div class="card">
+    <div class="card-title">בחר שחקנים</div>
+    <div class="sel-bar">
+      <div class="sel-count-wrap">
+        <span class="sel-count" id="selCount">0</span>
+        <span class="sel-label">נבחרו</span>
+      </div>
+      <div style="display:flex;gap:8px;">
+        <button class="btn-secondary" id="selectAllBtn">בחר הכל</button>
+        <button class="btn-secondary" id="clearSelBtn">נקה</button>
+      </div>
+    </div>
+    <div class="player-grid" id="playerGrid"></div>
+  </div>
+
+  <!-- SPLIT BUTTON -->
+  <div class="split-btn-wrap">
+    <button class="btn-primary" id="splitBtn">⚡ חלק קבוצות</button>
+    <div id="splitWarning"></div>
+  </div>
+
+  <!-- RESULT -->
+  <div id="teamsResult" style="margin-top:16px;"></div>
 
 </div>
 
 <script>
-// ════════════════════════════════════════════════════════
-// DATA — edit players here freely
-// rank: lower = stronger (1 is best), tall: true/false
-// ════════════════════════════════════════════════════════
+// ════════════════════════════════════════════════
+// PLAYERS — edit here freely
+// rank: 1=best … higher=weaker, tall: true/false
+// ════════════════════════════════════════════════
 const BASE_PLAYERS = [
   { name: "עידו סידור",            rank: 1,  tall: false },
   { name: "מאור",            rank: 1,  tall: false },
   { name: "אלירן",           rank: 1,  tall: true  },
   { name: "שמואל",           rank: 1,  tall: true  },
   { name: "רן שושן",         rank: 1,  tall: true  },
-  { name: "סתיו",            rank: 2,  tall: false },
-  { name: "שמוליק",          rank: 2,  tall: true  },
-  { name: "רונן",            rank: 2,  tall: false },
+  { name: "סתיו",            rank: 1,  tall: false },
+  { name: "שמוליק",          rank: 1,  tall: true  },
+  { name: "רונן",            rank: 1,  tall: false },
   { name: "גולן",            rank: 2,  tall: false },
-  { name: "רז",              rank: 3,  tall: false },
-  { name: "דניאל",           rank: 3,  tall: false },
-  { name: "אבי",              rank: 3,  tall: false },
-  { name: "אסף אברמזון",           rank: 3,  tall: false },
-  { name: "חן",              rank: 3,  tall: false },
-  { name: "לוטם",              rank: 3,  tall: false },
-  { name: "אלעד",              rank: 3,  tall: false },
+  { name: "רז",              rank: 2,  tall: false },
+  { name: "דניאל",           rank: 2,  tall: false },
+  { name: "אבי",              rank: 2,  tall: false },
+  { name: "אסף אברמזון",           rank: 2,  tall: false },
+  { name: "חן",              rank: 2,  tall: false },
+  { name: "לוטם",              rank: 2,  tall: false },
+  { name: "אלעד",              rank: 2,  tall: false },
   { name: "עומר",            rank: 3,  tall: false },
   { name: "אסף מגריסו",           rank: 3,  tall: false },
   { name: "אלדד פישר",          rank: 3,  tall: false },
   { name: "יוני פרהדיאן",            rank: 3,  tall: false },
   { name: "עידו תורג'מן",    rank: 3,  tall: false },
   { name: "יוני לונדר",        rank: 3,  tall: true  },
-  { name: "אלדד יוספוב",            rank: 4,  tall: false },
-  { name: "מיכאל",           rank: 4,  tall: true  },
-  { name: "אור",             rank: 4,  tall: false },
+  { name: "אלדד יוספוב",            rank: 3,  tall: false },
+  { name: "מיכאל",           rank: 3,  tall: true  },
+  { name: "אור",             rank: 3,  tall: false },
   { name: "עומרי",           rank: 4,  tall: false },
   { name: "תמיר",            rank: 4,  tall: true  },
   { name: "סער",             rank: 4,  tall: false },
@@ -470,211 +279,160 @@ const BASE_PLAYERS = [
   { name: "טל",              rank: 4,  tall: false },
 ];
 
-// ════════════════════════════════════════════════════════
-// STATE
-// ════════════════════════════════════════════════════════
-let players = JSON.parse(localStorage.getItem('players_v2') || 'null');
-if (!players) { players = BASE_PLAYERS.map((p,i) => ({...p, pts: 0, id: i})); savePlayers(); }
-
+// ════════ STATE ════════
+const players = BASE_PLAYERS.map((p, i) => ({ ...p, id: i }));
 let selected = new Set();
-let guests = []; // { name, tall, id }
-let currentTeams = [];
-let currentRatings = {}; // name -> rating key
+let guests   = [];
 let numTeams = 2;
-let perTeam = 4;
+let perTeam  = 4;
 
-function savePlayers() { localStorage.setItem('players_v2', JSON.stringify(players)); }
-
-// sorted by rank then by pts (adjusted rank)
-function getSorted() {
-  return [...players].sort((a, b) => {
-    const ra = getEffectiveRank(a), rb = getEffectiveRank(b);
-    return ra - rb || a.name.localeCompare(b.name, 'he');
-  });
-}
-
-function getEffectiveRank(p) {
-  // every 5 pts = 1 step up (rank goes down by 1 per 5 pts, min 1)
-  const bonus = Math.floor(p.pts / 5);
-  return Math.max(1, p.rank - bonus);
-}
-
-// ════════════════════════════════════════════════════════
-// THEME
-// ════════════════════════════════════════════════════════
-const themeToggle = document.getElementById('themeToggle');
+// ════════ THEME ════════
 let dark = localStorage.getItem('theme') === 'dark';
 applyTheme();
-themeToggle.addEventListener('click', () => { dark = !dark; applyTheme(); localStorage.setItem('theme', dark ? 'dark' : 'light'); });
+document.getElementById('themeToggle').addEventListener('click', () => {
+  dark = !dark; applyTheme(); localStorage.setItem('theme', dark ? 'dark' : 'light');
+});
 function applyTheme() {
   document.documentElement.setAttribute('data-theme', dark ? 'dark' : 'light');
-  themeToggle.textContent = dark ? '☀️' : '🌙';
+  document.getElementById('themeToggle').textContent = dark ? '☀️' : '🌙';
 }
 
-// ════════════════════════════════════════════════════════
-// TABS
-// ════════════════════════════════════════════════════════
-document.querySelectorAll('.tab-btn').forEach(btn => {
-  btn.addEventListener('click', () => {
-    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-    document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
-    btn.classList.add('active');
-    document.getElementById('panel-' + btn.dataset.tab).classList.add('active');
-    if (btn.dataset.tab === 'rate') renderRatePanel();
-    if (btn.dataset.tab === 'lb') renderLeaderboard();
-    if (btn.dataset.tab === 'split') renderSplitList();
-  });
+// ════════ SETTINGS ════════
+document.getElementById('numTeamsCtrl').addEventListener('click', e => {
+  if (!e.target.dataset.val) return;
+  numTeams = +e.target.dataset.val;
+  document.querySelectorAll('#numTeamsCtrl .seg-btn').forEach(b => b.classList.toggle('active', +b.dataset.val === numTeams));
+});
+document.getElementById('perTeamCtrl').addEventListener('click', e => {
+  if (!e.target.dataset.val) return;
+  perTeam = +e.target.dataset.val;
+  document.querySelectorAll('#perTeamCtrl .seg-btn').forEach(b => b.classList.toggle('active', +b.dataset.val === perTeam));
 });
 
-// ════════════════════════════════════════════════════════
-// SPLIT PANEL — player selection
-// ════════════════════════════════════════════════════════
-function renderSplitList() {
-  const sorted = [...players].sort((a,b) => a.name.localeCompare(b.name, 'he'));
-  const container = document.getElementById('splitPlayerList');
-  container.innerHTML = '';
-  sorted.forEach(p => {
-    const el = document.createElement('div');
-    el.className = 'player-item' + (selected.has(p.id) ? ' selected' : '');
-    el.innerHTML = `<span class="player-check">✓</span>
-      <span class="player-name">${p.name}</span>`;
-    el.addEventListener('click', () => {
-      if (selected.has(p.id)) selected.delete(p.id); else selected.add(p.id);
-      el.classList.toggle('selected', selected.has(p.id));
-      updateSelCount();
-    });
-    container.appendChild(el);
-  });
-  updateSelCount();
-}
-renderSplitList();
-
-function updateSelCount() {
-  const total = selected.size + guests.length;
-  document.getElementById('selCount').textContent = total;
-}
-
-document.getElementById('clearSel').addEventListener('click', () => {
-  selected.clear();
-  renderSplitList();
-});
-
-// ── GUESTS ──
-document.getElementById('addGuest').addEventListener('click', addGuest);
+// ════════ GUESTS ════════
+document.getElementById('addGuestBtn').addEventListener('click', addGuest);
 document.getElementById('guestName').addEventListener('keydown', e => { if (e.key === 'Enter') addGuest(); });
 function addGuest() {
   const name = document.getElementById('guestName').value.trim();
   if (!name) return;
   const tall = document.getElementById('guestTall').checked;
-  guests.push({ name, tall, id: 'g_' + Date.now() + Math.random() });
+  guests.push({ name, tall, id: 'g_' + Date.now() });
   document.getElementById('guestName').value = '';
   document.getElementById('guestTall').checked = false;
-  renderGuests();
-  updateSelCount();
+  renderGuests(); updateCount();
 }
 function renderGuests() {
-  const c = document.getElementById('guestList');
+  const c = document.getElementById('guestChips');
   c.innerHTML = '';
   guests.forEach(g => {
     const el = document.createElement('div');
-    el.style.cssText = 'display:flex;align-items:center;gap:6px;padding:6px 12px;background:var(--tag-bg);color:var(--tag-text);border-radius:var(--radius-sm);font-size:13px;font-weight:600;';
-    el.innerHTML = `${g.name}${g.tall ? ' ↕️' : ''} <span style="cursor:pointer;font-size:16px;color:var(--text3);margin-right:4px;" data-gid="${g.id}">✕</span>`;
-    el.querySelector('span').addEventListener('click', () => {
+    el.className = 'guest-chip';
+    el.innerHTML = `${g.name}${g.tall ? ' ↕️' : ''}<button data-id="${g.id}">✕</button>`;
+    el.querySelector('button').addEventListener('click', () => {
       guests = guests.filter(x => x.id !== g.id);
-      renderGuests(); updateSelCount();
+      renderGuests(); updateCount();
     });
     c.appendChild(el);
   });
 }
 
-// ── NUM TEAMS / PER TEAM ──
-document.getElementById('numTeams').addEventListener('click', e => {
-  if (!e.target.dataset.val) return;
-  numTeams = +e.target.dataset.val;
-  document.querySelectorAll('#numTeams .seg-btn').forEach(b => b.classList.toggle('active', +b.dataset.val === numTeams));
+// ════════ PLAYER GRID ════════
+function renderPlayerGrid() {
+  const sorted = [...players].sort((a, b) => a.name.localeCompare(b.name, 'he'));
+  const c = document.getElementById('playerGrid');
+  c.innerHTML = '';
+  sorted.forEach(p => {
+    const el = document.createElement('div');
+    el.className = 'player-item' + (selected.has(p.id) ? ' selected' : '');
+    el.dataset.id = p.id;
+    el.innerHTML = `<span class="player-check">✓</span><span class="player-name">${p.name}</span>`;
+    el.addEventListener('click', () => {
+      selected.has(p.id) ? selected.delete(p.id) : selected.add(p.id);
+      el.classList.toggle('selected', selected.has(p.id));
+      updateCount();
+    });
+    c.appendChild(el);
+  });
+  updateCount();
+}
+renderPlayerGrid();
+
+function updateCount() {
+  document.getElementById('selCount').textContent = selected.size + guests.length;
+}
+
+document.getElementById('clearSelBtn').addEventListener('click', () => {
+  selected.clear();
+  document.querySelectorAll('.player-item').forEach(el => el.classList.remove('selected'));
+  updateCount();
 });
-document.getElementById('playersPerTeam').addEventListener('click', e => {
-  if (!e.target.dataset.val) return;
-  perTeam = +e.target.dataset.val;
-  document.querySelectorAll('#playersPerTeam .seg-btn').forEach(b => b.classList.toggle('active', +b.dataset.val === perTeam));
+document.getElementById('selectAllBtn').addEventListener('click', () => {
+  players.forEach(p => selected.add(p.id));
+  document.querySelectorAll('.player-item').forEach(el => el.classList.add('selected'));
+  updateCount();
 });
 
-// ════════════════════════════════════════════════════════
-// SPLIT ALGORITHM
-// ════════════════════════════════════════════════════════
+// ════════ SPLIT ════════
 document.getElementById('splitBtn').addEventListener('click', doSplit);
 
+function shuffle(arr) {
+  const a = [...arr];
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
+
 function doSplit() {
-  const selPlayers = players.filter(p => selected.has(p.id)).map(p => ({...p, isGuest: false}));
-  const guestPlayers = guests.map(g => ({
-    name: g.name, tall: g.tall, id: g.id,
-    rank: 3, pts: 0, isGuest: true
-  }));
-  let pool = [...selPlayers, ...guestPlayers];
+  const selPlayers = players.filter(p => selected.has(p.id)).map(p => ({ ...p, isGuest: false }));
+  const guestPool  = guests.map(g => ({ name: g.name, tall: g.tall, id: g.id, rank: 3, isGuest: true }));
+  let pool = [...selPlayers, ...guestPool];
 
-  const needed = numTeams * perTeam;
   const warning = document.getElementById('splitWarning');
-
   if (pool.length < numTeams) {
-    warning.innerHTML = '<div class="alert alert-warn">⚠️ יש לבחור לפחות ' + numTeams + ' שחקנים.</div>';
+    warning.innerHTML = `<div class="alert alert-warn">⚠️ יש לבחור לפחות ${numTeams} שחקנים.</div>`;
     return;
   }
   warning.innerHTML = '';
 
-  // ── Determine actual slots: each team gets exactly perTeam players (hard cap) ──
-  // If pool > needed: bench the weakest players
-  // If pool < needed: teams may be smaller (distribute as evenly as possible, max perTeam)
+  const needed = numTeams * perTeam;
+
+  // Bench excess players — shuffle first so bench composition varies each time
   let bench = [];
   if (pool.length > needed) {
-    const byRank = [...pool].sort((a,b) => getEffectiveRank(a) - getEffectiveRank(b));
-    pool  = byRank.slice(0, needed);
-    bench = byRank.slice(needed);
+    const shuffled = shuffle(pool);
+    pool  = shuffled.slice(0, needed);
+    bench = shuffled.slice(needed);
   }
 
-  // Actual team sizes: each team gets at most perTeam players
-  // Distribute pool.length among numTeams, max perTeam each, fill from top
+  // Actual sizes: each team max perTeam, distribute pool evenly
   const actualSizes = Array(numTeams).fill(0);
-  let remaining = pool.length;
-  for (let i = 0; i < numTeams && remaining > 0; i++) {
-    const give = Math.min(perTeam, Math.ceil(remaining / (numTeams - i)));
-    actualSizes[i] = give;
-    remaining -= give;
+  let rem = pool.length;
+  for (let i = 0; i < numTeams && rem > 0; i++) {
+    const give = Math.min(perTeam, Math.ceil(rem / (numTeams - i)));
+    actualSizes[i] = give; rem -= give;
   }
 
-  let extraMsg = '';
-  if (bench.length > 0) {
-    extraMsg = `ℹ️ ${bench.length} שחקן/ים ימתינו מחוץ לשטח: ${bench.map(p=>p.name).join(', ')}`;
-  } else if (pool.length < needed) {
-    extraMsg = `⚠️ נבחרו ${pool.length} שחקנים במקום ${needed}. חלק מהקבוצות יהיו קטנות יותר.`;
-  }
-
-  // ── Step 1: assign tier (1-4) dynamically from the selected pool only ──
-  // Pool is sorted best→worst by effective rank; split into 4 equal groups.
-  // Tier 1 = top quarter, Tier 4 = bottom quarter.
-  // If not divisible by 4, earlier tiers (1,2,3) get one fewer — tier 4 gets the extras.
-  const poolSorted = [...pool].sort((a,b) => getEffectiveRank(a) - getEffectiveRank(b));
+  // Assign dynamic tiers from selected pool only
+  const poolSorted = [...pool].sort((a, b) => a.rank - b.rank);
   const n = poolSorted.length;
-  const base4 = Math.floor(n / 4);
-  const rem4  = n % 4;
-  // sizes for tiers 1-4: tiers 4,3,2,1 get the remainder (bottom tiers get more)
-  const tierSizes4 = [base4, base4, base4, base4];
-  for (let i = 0; i < rem4; i++) tierSizes4[3 - i]++;
-  let tiered = [];
-  let idx = 0;
+  const base = Math.floor(n / 4), extra = n % 4;
+  const tierSizes = [base, base, base, base];
+  for (let i = 0; i < extra; i++) tierSizes[3 - i]++;
+
+  let tiered = []; let idx = 0;
   for (let t = 1; t <= 4; t++) {
-    for (let j = 0; j < tierSizes4[t-1]; j++) {
-      tiered.push({...poolSorted[idx], tier: t});
-      idx++;
+    for (let j = 0; j < tierSizes[t - 1]; j++) {
+      tiered.push({ ...poolSorted[idx], tier: t }); idx++;
     }
   }
 
-  // ── Step 2: distribute each tier across teams via random shuffle + round-robin,
-  //            but hard-cap each team at its actualSize ──
-  const teamArrays = Array.from({length: numTeams}, () => []);
+  // Distribute tiers round-robin (randomized), respect actualSizes hard cap
+  const teamArrays = Array.from({ length: numTeams }, () => []);
   for (let t = 1; t <= 4; t++) {
-    const tierPlayers = shuffle(tiered.filter(p => p.tier === t));
-    for (const p of tierPlayers) {
-      // find the team with fewest players that still has room
+    const tier = shuffle(tiered.filter(p => p.tier === t));
+    for (const p of tier) {
       let target = -1, minLen = Infinity;
       for (let i = 0; i < numTeams; i++) {
         if (teamArrays[i].length < actualSizes[i] && teamArrays[i].length < minLen) {
@@ -685,71 +443,42 @@ function doSplit() {
     }
   }
 
-  // ── Step 3: balance by total score ──
-  balanceTeams(teamArrays);
+  // Balance by score
+  balanceTeams(teamArrays, actualSizes);
+  // Balance tall
+  balanceTall(teamArrays, actualSizes);
 
-  // ── Step 4: balance tall players ──
-  balanceTall(teamArrays);
-
-  currentTeams = teamArrays;
-  renderTeams(extraMsg);
+  renderTeams(teamArrays, bench);
 }
 
-function distribute4(n) {
-  // sizes for tiers 1,2,3,4 — tier 4 gets extra if not divisible
-  const base = Math.floor(n / 4);
-  const rem = n % 4;
-  // extra goes to lower tiers first (4,3,2,1)
-  const sizes = [base, base, base, base];
-  for (let i = 0; i < rem; i++) sizes[3 - i]++;
-  return sizes;
-}
-
-function tierScore(t) { return 5 - t; } // tier1=4, tier2=3, tier3=2, tier4=1
-
+function tierScore(t) { return 5 - t; }
 function teamScore(arr) { return arr.reduce((s, p) => s + tierScore(p.tier), 0); }
 
-function balanceTeams(teams) {
-  // simple swap-based balancing: up to 50 iterations
-  for (let iter = 0; iter < 50; iter++) {
+function balanceTeams(teams, sizes) {
+  for (let iter = 0; iter < 60; iter++) {
     let maxS = -Infinity, minS = Infinity, maxI = 0, minI = 0;
-    teams.forEach((t, i) => {
-      const s = teamScore(t);
-      if (s > maxS) { maxS = s; maxI = i; }
-      if (s < minS) { minS = s; minI = i; }
-    });
+    teams.forEach((t, i) => { const s = teamScore(t); if (s > maxS) { maxS = s; maxI = i; } if (s < minS) { minS = s; minI = i; } });
     if (maxS - minS <= 1) break;
-    // Try to swap a player from max-team with one from min-team to reduce diff
     let bestSwap = null, bestDiff = maxS - minS;
     for (let pi = 0; pi < teams[maxI].length; pi++) {
       for (let pj = 0; pj < teams[minI].length; pj++) {
         const pa = teams[maxI][pi], pb = teams[minI][pj];
         if (pa.tier === pb.tier) continue;
-        const newMaxS = maxS - tierScore(pa.tier) + tierScore(pb.tier);
-        const newMinS = minS - tierScore(pb.tier) + tierScore(pa.tier);
-        const newDiff = Math.abs(newMaxS - newMinS);
-        if (newDiff < bestDiff) {
-          bestDiff = newDiff;
-          bestSwap = [pi, pj];
-        }
+        const nd = Math.abs((maxS - tierScore(pa.tier) + tierScore(pb.tier)) - (minS - tierScore(pb.tier) + tierScore(pa.tier)));
+        if (nd < bestDiff) { bestDiff = nd; bestSwap = [pi, pj]; }
       }
     }
     if (!bestSwap) break;
-    const [pi, pj] = bestSwap;
-    [teams[maxI][pi], teams[minI][pj]] = [teams[minI][pj], teams[maxI][pi]];
+    [teams[maxI][bestSwap[0]], teams[minI][bestSwap[1]]] = [teams[minI][bestSwap[1]], teams[maxI][bestSwap[0]]];
   }
-  // Ensure higher-score team has more tier-4 (lower quality) players if imbalanced
-  // This is handled by the swapping above
 }
 
-function balanceTall(teams) {
-  // Count tall per team, try to equalize via swaps
+function balanceTall(teams, sizes) {
   for (let iter = 0; iter < 30; iter++) {
-    const tallCounts = teams.map(t => t.filter(p => p.tall).length);
-    const max = Math.max(...tallCounts), min = Math.min(...tallCounts);
+    const tc = teams.map(t => t.filter(p => p.tall).length);
+    const max = Math.max(...tc), min = Math.min(...tc);
     if (max - min <= 1) break;
-    const maxI = tallCounts.indexOf(max), minI = tallCounts.indexOf(min);
-    // find a tall in maxI and not-tall in minI with matching score
+    const maxI = tc.indexOf(max), minI = tc.indexOf(min);
     let swapped = false;
     for (const pa of teams[maxI].filter(p => p.tall)) {
       for (const pb of teams[minI].filter(p => !p.tall)) {
@@ -765,155 +494,44 @@ function balanceTall(teams) {
   }
 }
 
-function shuffle(arr) {
-  const a = [...arr];
-  for (let i = a.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [a[i], a[j]] = [a[j], a[i]];
-  }
-  return a;
-}
-
-const TEAM_NAMES = ['קבוצה א', 'קבוצה ב', 'קבוצה ג'];
+const TEAM_NAMES  = ['קבוצה א', 'קבוצה ב', 'קבוצה ג'];
 const TEAM_COLORS = ['team-color-a', 'team-color-b', 'team-color-c'];
 
-function renderTeams(extraMsg) {
+function renderTeams(teams, bench) {
   const container = document.getElementById('teamsResult');
   container.innerHTML = '';
-
-  if (extraMsg) {
-    const a = document.createElement('div');
-    a.className = 'alert alert-warn';
-    a.textContent = extraMsg;
-    container.appendChild(a);
-  }
 
   const grid = document.createElement('div');
   grid.className = 'teams-grid';
 
-  currentTeams.forEach((team, ti) => {
+  teams.forEach((team, ti) => {
     const card = document.createElement('div');
-    card.className = 'team-card ' + TEAM_COLORS[ti];
-    const score = teamScore(team);
+    card.className = `team-card ${TEAM_COLORS[ti]}`;
     card.innerHTML = `
-      <div class="team-header">
-        <span class="team-name">${TEAM_NAMES[ti]}</span>
-
-      </div>
+      <div class="team-header"><span class="team-name">${TEAM_NAMES[ti]}</span></div>
       <div class="team-players">
         ${team.map((p, i) => `
           <div class="team-player-row">
             <span class="pnum">${i + 1}</span>
             <span>${p.name}</span>
             ${p.isGuest ? '<span class="extra-tag">מזדמן</span>' : ''}
-          </div>
-        `).join('')}
+          </div>`).join('')}
       </div>`;
     grid.appendChild(card);
   });
-
   container.appendChild(grid);
-  grid.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-}
 
-// ════════════════════════════════════════════════════════
-// RATE PANEL
-// ════════════════════════════════════════════════════════
-function renderRatePanel() {
-  const c = document.getElementById('ratePlayerList');
-  c.innerHTML = '';
-  currentRatings = {};
-
-  // Use last split players, or all players
-  const pool = currentTeams.flat().length > 0
-    ? currentTeams.flat()
-    : players.map(p => ({...p}));
-
-  const nonGuests = pool.filter(p => !p.isGuest);
-
-  if (nonGuests.length === 0) {
-    c.innerHTML = '<div class="empty-state"><div class="icon">⚡</div>קודם יש לבצע חלוקה בלשונית ״חלוקה״</div>';
-    return;
+  if (bench.length > 0) {
+    const bc = document.createElement('div');
+    bc.className = 'bench-card';
+    bc.style.marginTop = '12px';
+    bc.innerHTML = `<div class="bench-title">🪑 ספסל (${bench.length} שחקנים עודפים)</div>
+      <div class="bench-names">${bench.map(p => `<span class="bench-chip">${p.name}</span>`).join('')}</div>`;
+    container.appendChild(bc);
   }
 
-  const info = document.createElement('div');
-  info.className = 'alert alert-info';
-  info.textContent = 'דרג רק שחקנים שביצועיהם היו מעל או מתחת לממוצע. שחקנים לא מדורגים = ביצוע רגיל.';
-  c.appendChild(info);
-
-  const RATINGS = [
-    { key: 'great', label: 'מעולה +2', pts: 2 },
-    { key: 'good',  label: 'טוב +1',   pts: 1 },
-    { key: 'weak',  label: 'חלש −1',   pts: -1 },
-    { key: 'vweak', label: 'חלש מאוד −2', pts: -2 },
-  ];
-
-  nonGuests.sort((a,b) => a.name.localeCompare(b.name, 'he'));
-  nonGuests.forEach(p => {
-    const row = document.createElement('div');
-    row.className = 'rating-player-row';
-    const btns = RATINGS.map(r =>
-      `<button class="rate-btn" data-name="${p.name}" data-key="${r.key}">${r.label}</button>`
-    ).join('');
-    row.innerHTML = `<span class="rating-pname">${p.name}</span><div class="rating-btns">${btns}</div>`;
-    row.querySelectorAll('.rate-btn').forEach(btn => {
-      btn.addEventListener('click', () => {
-        const name = btn.dataset.name, key = btn.dataset.key;
-        if (currentRatings[name] === key) {
-          // deselect
-          delete currentRatings[name];
-          row.querySelectorAll('.rate-btn').forEach(b => b.className = 'rate-btn');
-        } else {
-          currentRatings[name] = key;
-          row.querySelectorAll('.rate-btn').forEach(b => {
-            b.className = 'rate-btn' + (b.dataset.key === key ? ` active-${key}` : '');
-          });
-        }
-      });
-    });
-    c.appendChild(row);
-  });
+  grid.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
 }
-
-const RATING_PTS = { great: 2, good: 1, weak: -1, vweak: -2 };
-
-document.getElementById('saveRatings').addEventListener('click', () => {
-  const entries = Object.entries(currentRatings);
-  if (entries.length === 0) { alert('לא דורגו שחקנים.'); return; }
-  entries.forEach(([name, key]) => {
-    const p = players.find(x => x.name === name);
-    if (p) { p.pts = (p.pts || 0) + RATING_PTS[key]; }
-  });
-  savePlayers();
-  currentRatings = {};
-  alert('✅ הדירוג נשמר! הניקוד עודכן.');
-  renderLeaderboard();
-});
-
-// ════════════════════════════════════════════════════════
-// LEADERBOARD
-// ════════════════════════════════════════════════════════
-function renderLeaderboard() {
-  const c = document.getElementById('leaderboard');
-  c.innerHTML = '';
-  const sorted = [...players].sort((a,b) => a.name.localeCompare(b.name, 'he'));
-  sorted.forEach(p => {
-    const row = document.createElement('div');
-    row.className = 'lb-row';
-    const ptsColor = p.pts > 0 ? 'var(--accent3)' : p.pts < 0 ? 'var(--accent)' : 'var(--text3)';
-															  
-    row.innerHTML = `
-										   
-      <span class="lb-name">${p.name}</span>
-															 
-      <span class="lb-pts" style="color:${ptsColor}">${p.pts > 0 ? '+' : ''}${p.pts} נק'</span>
-    `;
-    c.appendChild(row);
-  });
-}
-
-// init leaderboard quietly
-renderLeaderboard();
 </script>
 </body>
 </html>
